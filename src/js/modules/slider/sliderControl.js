@@ -1,13 +1,19 @@
-import sliderView from './sliderView'
+import sliderView from './sliderView' // Импортируем класс sliderView из отдельного файла
 
+// Создаем функцию `standart` для инициализации слайдеров на странице
 export function standart() {
+    // Создаем новый экземпляр класса sliderView
     let view = new sliderView()
 
+    // Проверяем инициализацию, чтобы выяснить, есть ли слайды на странице
     if (view.init() === false) {
+        // Если слайды не найдены, выводим сообщение в консоль
         console.log('.js-slider не найдены, проверь правильность разметки...')
         console.log('либо отключи данный скрипт, если он не используется...')
-        return
+        return // Завершаем выполнение функции, так как инициализация не удалась
     }
 
-	view.sliders.forEach(slider => view.addSlider(slider))
+    // Для каждого слайдера, найденного на странице, вызываем метод addSlider
+    view.sliders.forEach(slider => view.addSlider(slider))
+    // Метод добавления слайдера `addSlider` конфигурирует и запускает каждый слайдер на основе настроек
 }

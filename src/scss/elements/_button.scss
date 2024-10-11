@@ -1,0 +1,382 @@
+@use '../mixins/fluid-size' as size;
+@use '../mixins/disable-mob-hover' as mobile;
+
+/* btn-proto */
+.btn-proto {
+    --btn-default-height: 60px;
+    --btn-medium-height: 48px;
+    --btn-small-height: 40px;
+    --button-icon-size: 24px;
+	--btn-radius: 1000px;
+
+    position: relative;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+    gap: 0.6em;
+	border: none;
+    font-weight: 500;
+	line-height: 1;
+	text-align: center;
+	text-decoration: none;
+	cursor: pointer;
+	transition: var(--fast);
+    overflow: hidden;
+
+    &.centered {
+        display: block;
+        margin-inline: auto;
+    }
+
+    a {
+        font-size: inherit;
+        font-weight: inherit;
+        text-transform: inherit;
+        color: inherit;
+    }
+}
+
+/* btn-btn */
+.button {
+    @extend .btn-proto;
+
+    height: var(--btn-default-height);
+    border-radius: var(--btn-radius);
+	padding-inline: calc(var(--scale) * 1.2);
+    @include size.calculate(font-size, 480px, 1460px, 14px, 18px);
+    letter-spacing: -0.02em;
+	color: var(--black);
+    
+	@include mobile.hover {
+
+        /* анимируем слой с градиентной заливкой */
+        &::before {
+            scale: 3;
+        }
+	}
+
+    /* слой с градиентной заливкой */
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: var(--gradient-beige);
+        transition: var(--fast);
+    }
+
+    /* размещаем всех потомков поверх градиентного слоя */
+    > * {
+        position: relative;
+    }
+	
+	&:focus {
+        outline-color: 1px solid var(--beige-accent);
+	}
+	
+	&:active {
+        /* при нажатии прячем слой с градиентной заливкой */
+        &::before {
+            opacity: 0;
+        }
+
+        /* показываем бежевый фон */
+        background-color: var(--click-beige);
+	}
+
+    &.zero {
+        background-color: transparent;
+        border: 1px solid var(--gray-blue);
+
+        @include mobile.hover {
+            border-color: var(--beige-accent);
+            color: var(--beige-accent);
+
+            .footer & {
+                border-color: rgba(222, 204, 162, 1);
+                color: var(--white);
+            }
+        }
+
+        &::before {
+            content: none;
+        }
+
+        &:active {
+            border-color: var(--click-beige);
+            background-color: var(--click-beige);
+            color: var(--white);
+
+            svg {
+                fill: var(--white);
+            }
+        }
+
+        .footer & {
+            border-color: rgba(222, 204, 162, 0.4);
+            color: var(--gray);
+        }
+
+        &.active {
+            background-color: var(--beige-accent);
+            pointer-events: none;
+        }
+    }
+
+    &.zero-beige {
+        @extend .zero;
+
+        border-color: var(--beige-accent);
+    }
+
+    &.white {
+        color: var(--white);
+
+        &:active {
+            border-color: var(--white);
+            color: var(--white);
+            background-color: transparent;
+        }
+    }
+
+    &.medium {
+        height: var(--btn-medium-height);
+        padding-inline: calc(var(--scale) * 0.8);
+        @include size.calculate(font-size, 480px, 1460px, 13px, 16px);
+    }
+
+    &.small {
+        height: var(--btn-small-height);
+        padding-inline: calc(var(--scale) * 0.6);
+        @include size.calculate(font-size, 480px, 1460px, 12px, 15px);
+    }
+
+    &.icon {
+        svg {
+            width: var(--button-icon-size);
+            height: var(--button-icon-size);
+            fill: var(--black);
+            transition: var(--fast);
+        }
+
+        @include mobile.hover {
+            svg {
+                fill: var(--beige-accent);
+            }
+        }
+    }
+
+    .footer & {
+        @include size.calculate(font-size, 480px, 1460px, 13px, 15px);
+        height: 46px;
+    }
+
+    @media only screen and (max-width: 1080px) {
+        --btn-default-height: 42px;
+        --btn-medium-height: 34px;
+        --btn-small-height: 28px;
+        --button-icon-size: 20px;
+    }
+
+    @media only screen and (max-width: 480px) {
+        .footer & {
+            width: 100%;
+        }
+    }
+}
+
+/* группировка кнопок в одном блоке */
+.button-group {
+    display: flex;
+    align-items: center;
+    @include size.calculate(gap, 480px, 1460px, 6px, 12px);
+
+    /* если группа кнопок в главном экране */
+    .hero & {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    /* если группа кнопок в футере */
+    .footer & {
+        gap: 12px;
+    }
+
+    .card-contact__header & {
+        gap: 10px;
+    }
+}
+
+/* button for social */
+.button-social {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    @include size.calculate(width, 780px, 1460px, 58px, 100px);
+    @include size.calculate(height, 780px, 1460px, 58px, 100px);
+    border-radius: 50%;
+    border: 1px solid var(--dark-border);
+    background-color: transparent;
+    overflow: hidden;
+    transition: var(--fast);
+
+    @include mobile.hover {
+        border-color: var(--white);
+
+        svg {
+            fill: var(--blue-accent);
+        }
+    }
+
+    svg {
+        width: 50%;
+        height: auto;
+        fill: var(--white);
+    }
+}
+
+/* button on slider */
+.button-slider {
+    --button-slider-size: 60px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--button-slider-size);
+    height: var(--button-slider-size);
+    background-color: transparent;
+    border: 1px solid var(--gray-border);
+    border-radius: 50%;
+    transition: var(--fast);
+
+    @include mobile.hover {
+        border-color: var(--beige-accent);
+        
+        svg {
+            fill: var(--black);
+        }
+    }
+
+    svg {
+        flex-shrink: 0;
+        width: 40%;
+        fill: var(--beige-accent);
+        transition: var(--fast);
+    }
+
+    @media only screen and (max-width: 680px) {
+        width: 40px;
+        height: 40px;
+    }
+}
+
+/* button for play */
+.button-play {
+    @include size.calculate(width, 480px, 1460px, 40px, 80px);
+	@include size.calculate(height, 480px, 1460px, 40px, 80px);
+	border: none;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: rgba($color: #ffffff, $alpha: 0.2);
+	backdrop-filter: blur(8px);
+	transition: var(--fast);
+    
+	svg {
+        margin-left: 0.3em;
+		width: 26%;
+		fill: var(--brand-dark);
+		transition: var(--fast);
+	}
+}
+
+/* button for search filter */
+.button-search {
+    width: calc(var(--input-filter-height) - 8px);
+    height: calc(var(--input-filter-height) - 8px);
+    border-radius: 50%;
+    background-color: transparent;
+
+    svg {
+        width: 24px;
+        height: 24px;
+        fill: var(--beige-accent);
+    }
+
+    .active & {
+        background-color: var(--beige-accent);
+
+        svg {
+            fill: var(--white);
+        }
+    }
+
+    @media only screen and (max-width: 780px) {
+        svg {
+            width: 20px;
+            height: 20px;
+        }
+    }
+}
+
+
+/* Кнопка наверх */
+.button-top {
+    --button-top-size: 48px;
+    --button-top-arrow-size: 24px;
+
+    position: fixed;
+    right: 40px;
+    bottom: 5%;
+    height: var(--button-top-size);
+    width: var(--button-top-size);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--gray-light);
+    border-radius: 50%;
+    opacity: 0;
+    transition: var(--fast);
+    pointer-events: none;
+    z-index: 98;
+
+    @include mobile.hover {
+        background-color: var(--beige-accent);
+
+        svg {
+            fill: var(--black);
+        }
+    }
+
+    &.active {
+        opacity: 1;
+        pointer-events: all;
+    }
+
+    svg {
+        width: var(--button-top-arrow-size);
+        height: var(--button-top-arrow-size);
+        fill: var(--gray-blue);
+    }
+
+    @media only screen and (max-width: 980px) {
+        right: 30px;
+        bottom: 30px;
+    }
+
+    @media only screen and (max-width: 780px) {
+        right: 20px;
+        bottom: 20px;
+    }
+
+    @media only screen and (max-width: 680px) {
+        --button-top-size: 36px;
+        --button-top-arrow-size: 18px;
+
+        right: 10px;
+        bottom: 10px;
+    }
+}
