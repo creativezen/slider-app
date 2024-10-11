@@ -1,0 +1,4 @@
+@use './mixins/disable-mob-hover' as mobile;
+@use './mixins/fluid-size' as size;
+
+@import "../../node_modules/swiper/swiper-bundle.min";

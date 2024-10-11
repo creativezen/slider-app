@@ -1,0 +1,55 @@
+.none {
+	display: none !important;
+}
+
+.visually-hidden {
+	position: absolute;
+    top: -1000%;
+    left: -1000%;
+	width: 1px;
+	height: 1px;
+	margin: -1px;
+	border: 0;
+	padding: 0;
+	white-space: nowrap;
+	clip-path: inset(100%);
+	clip: rect(0 0 0 0);
+	overflow: hidden;
+}
+
+.no-scroll {
+	overflow-y: hidden;
+}
+
+.block {
+    width: 100%;
+}
+
+.no-event {
+    pointer-events: none;
+}
+
+.blue {
+    color: var(--blue-accent);
+}
+
+.white {
+    color: var(--white);
+}
+
+.red {
+    color: red;
+}
+
+.bg-white {
+    background-color: var(--white);
+}
+
+.bg-gray {
+    background-color: var(--gray-light);
+}
+
+.sticky {
+    position: sticky;
+    top: calc(20px + var(--header-height));
+}

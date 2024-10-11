@@ -1,0 +1,389 @@
+@use './mixins/font-face' as font;
+@use './mixins/fluid-size' as size;
+
+/* Fonts connect */
+@include font.font-face('Oranienbaum', 'Oranienbaum-Regular', 400, normal);
+@include font.font-face('Montserrat', 'Montserrat-Regular', 400, normal);
+@include font.font-face('Montserrat', 'Montserrat-Medium', 500, normal);
+@include font.font-face('Montserrat', 'Montserrat-SemiBold', 600, normal);
+
+/* Typography */
+.title-property {
+    background-color: transparent;
+	font-family: var(--font-title);
+	font-weight: 400;
+	line-height: 1.1;
+	letter-spacing: -0.04em;
+	color: var(--black);
+	transition: var(--fast);
+
+    &.white, .white {
+        color: var(--white);
+    }
+
+    &.beige, .beige {
+        color: var(--beige-accent);
+    }
+
+    &.center, .center,
+    &.centered, .centered {
+        text-align: center;
+    }
+
+    &.right, .right {
+        text-align: right;
+    }
+
+    &.gradient, .gradient {
+        background-image: var(--gradient-beige);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        text-fill-color: transparent;
+    }
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	@extend .title-property;
+    color: var(--black);
+
+    .gray-blue & {
+        color: var(--white);
+    }
+}
+
+h1 {
+	@include size.calculate(font-size, 480px, 1460px, 46px, 100px);
+
+	& + * {
+		margin-top: calc(var(--scale) * 1.8);
+	}
+}
+
+h2 {
+	@include size.calculate(font-size, 480px, 1460px, 42px, 72px);
+
+	& + * {
+		margin-top: calc(var(--scale) * 1.3);
+	}
+}
+
+h3 {
+	@include size.calculate(font-size, 480px, 1460px, 36px, 60px);
+
+	& + * {
+		margin-top: calc(var(--scale) * 1.2);
+	}
+}
+
+h4 {
+	@include size.calculate(font-size, 480px, 1460px, 30px, 48px);
+	line-height: 1.1;
+
+	& + * {
+		margin-top: calc(var(--scale) * 1);
+	}
+}
+
+h5 {
+	@include size.calculate(font-size, 480px, 1460px, 28px, 38px);
+	line-height: 1.2;
+
+	& + * {
+		margin-top: calc(var(--scale) * 0.8);
+	}
+}
+
+h6 {
+	@include size.calculate(font-size, 480px, 1460px, 26px, 32px);
+	line-height: 1.2;
+
+	& + * {
+		margin-top: calc(var(--scale) * 0.8);
+	}
+
+    [class*="card"] & {
+        line-height: 1.1;
+    }
+}
+
+blockquote {
+    --quotes-size: 2em;
+
+    position: relative;
+    @include size.calculate(padding-top, 480px, 1460px, 22px, 40px);
+    @include size.calculate(padding-bottom, 480px, 1460px, 22px, 40px);
+    @include size.calculate(padding-right, 480px, 1460px, 22px, 40px);
+    @include size.calculate(padding-left, 480px, 1460px, 48px, 68px);
+    color: var(--black);
+    background: var(--gray-sky);
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 1.6em;
+        left: 1em;
+        width: var(--quotes-size);
+        height: var(--quotes-size);
+        background-repeat: no-repeat;
+        background-position: center;
+        background-image: url("data:image/svg+xml,%3Csvg width='39' height='32' viewBox='0 0 39 32' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M38.1696 0.589846L32.6696 22.9198L31.2396 16.5398C33.3663 16.5398 35.1629 17.1998 36.6296 18.5198C38.0229 19.8398 38.7196 21.5998 38.7196 23.7998C38.7196 26.0732 38.0229 27.8698 36.6296 29.1898C35.1629 30.5832 33.4029 31.2798 31.3496 31.2798C29.2229 31.2798 27.4996 30.5465 26.1796 29.0798C24.8596 27.6865 24.1996 25.9265 24.1996 23.7998C24.1996 23.1398 24.2363 22.4432 24.3096 21.7098C24.3829 21.0498 24.5663 20.2798 24.8596 19.3998C25.0796 18.5198 25.4463 17.3832 25.9596 15.9898L31.2396 0.589846L38.1696 0.589846Z' fill='%23DECCA2' /%3E%3Cpath d='M14.6399 0.589844L9.13992 22.9198L7.70992 16.5398C9.83659 16.5398 11.6333 17.1998 13.0999 18.5198C14.4933 19.8398 15.1899 21.5998 15.1899 23.7998C15.1899 26.0732 14.4933 27.8698 13.0999 29.1898C11.6333 30.5832 9.87326 31.2798 7.81992 31.2798C5.69325 31.2798 3.96992 30.5465 2.64992 29.0798C1.32992 27.6865 0.669922 25.9265 0.669922 23.7998C0.669922 23.1398 0.706589 22.4432 0.779922 21.7098C0.853256 21.0498 1.03659 20.2798 1.32992 19.3998C1.54992 18.5198 1.91659 17.3832 2.42992 15.9898L7.70992 0.589844L14.6399 0.589844Z' fill='%23DECCA2' /%3E%3C/svg%3E");
+        background-size: 100%;
+    }
+
+    > * {
+        display: block;
+
+        /* Отталкиваем следующий элемент от предыдущего */
+        & + * {
+            @include size.calculate(margin-top, 480px, 1460px, 12px, 20px);
+        }
+    }
+
+    /* Отталкиваем следующий элемент от предыдущего */
+    & + *,
+    * + & {
+        @include size.calculate(margin-top, 480px, 1460px, 20px, 30px);
+    }
+
+    @media only screen and (max-width: 680px) {
+        --quotes-size: 1.6em;
+        &::before {
+            top: 1em;
+        }
+    }
+}
+
+b,
+strong {
+	font-weight: 700;
+}
+
+p,
+b,
+strong,
+span,
+div,
+blockquote {
+	&.beige {
+        color: var(--beige-accent);
+    }
+
+    &.antiqua {
+        font-family: var(--font-title);
+    }
+}
+
+
+p,
+b,
+strong,
+span,
+div {
+    .gray-blue &:not([class]):not(.button span) {
+        color: var(--gray-blue);
+    }
+
+    .gray &:not([class]):not(.button span) {
+        color: var(--gray);
+    }
+}
+
+small {
+    &.gray {
+        color: var(--gray);
+    }
+
+    .section__header &,
+    .section__body &,
+    .section__footer & {
+        display: block;
+    }
+}
+
+small + small {
+	margin-top: calc(var(--scale) * 0.2);
+}
+
+* + small {
+    margin-top: calc(var(--scale) * 0.6);
+}
+
+ul:not([class]),
+ol:not([class]) {
+    li {
+        position: relative;
+        padding-left: 1.2em;
+    }
+
+    li + * {
+        margin-top: 8px;
+    }
+
+    * {
+        font-size: inherit;
+        line-height: inherit;
+    }
+
+    @media only screen and (max-width: 680px) {
+        li + * {
+            margin-top: 4px;
+        }
+    }
+}
+
+ul:not([class]) {
+    li {
+        &:before {
+            content: '';
+            width: 7px;
+            height: 7px;
+            display: block;
+            position: absolute;
+            top: 0.6em;
+            left: 0;
+            margin: auto;
+            border-radius: 100px;
+            background: var(--beige-accent);
+        }
+    }
+}
+
+.title {
+	@extend h2;
+
+    & + .small-accent {
+        display: block;
+        margin-top: calc(var(--scale) * 1.4);
+    }
+
+    &.centered,
+    .centered & {
+        text-align: center;
+
+        /* Центрирование вступает на мобильных устройствах */
+        &[data-mobile="580"] {
+            @media only screen and (min-width: 580px) {
+                text-align: left;
+                margin-inline: 0;
+            }
+        }
+    }
+
+    &.gradient {
+        background-image: var(--gradient-beige);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        text-fill-color: transparent;
+    }
+
+    /* Компенсируем высоту строки по отношеню к верхнему отступу блок-секции */
+    .section__header & {
+        margin-top: -0.36em;
+    }
+
+    @media only screen and (max-width: 380px) {
+       font-size: 40px;
+    }
+}
+
+.title-hero {
+    @extend h1;
+
+    > * {
+        display: block;
+        line-height: 1;
+    }
+
+    .center {
+        text-align: center;
+    }
+
+    .right {
+        text-align: right;
+    }
+
+    & + .accent {
+        @include size.calculate(font-size, 480px, 1460px, 17px, 28px);
+        text-align: center;
+        
+        > * + * {
+            @include size.calculate(margin-top, 480px, 1460px, 12px, 22px);
+        }
+        
+        .home-page & {
+            @include size.calculate(font-size, 480px, 1460px, 20px, 34px);
+        }
+    }
+
+    @media only screen and (max-width: 480px) {
+        text-align: center;
+        
+        & > * {
+            display: inline;
+        }
+    }
+
+    @media only screen and (max-width: 380px) {
+        font-size: 40px;
+    }
+}
+
+.tagline {
+    @include size.calculate(font-size, 480px, 1460px, 17px, 24px);
+    max-width: 1100px;
+    
+    .centered &,
+    &.centered {
+        margin-inline: auto;
+        text-align: center;
+
+        /* Центрирование вступает на мобильных устройствах */
+        &[data-mobile="580"] {
+            @media only screen and (min-width: 580px) {
+                text-align: left;
+                margin-inline: 0;
+            }
+        }
+    }
+}
+
+.accent-paragraph *:not([class*='title']):not([class*='small']):not([class*='content-item']):not([class*='content-tagline']):not(blockquote) {
+    @include size.calculate(font-size, 480px, 1460px, 18px, 24px);
+
+    letter-spacing: -0.04em;
+}
+
+.accent-paragraph {
+    > * + *:not([class*='title']):not([class*='small']):not([class*='content-item']):not(blockquote) {
+        @include size.calculate(margin-top, 480px, 1460px, 14px, 30px);
+    }
+
+    > picture + *,
+    > img + * {
+        @include size.calculate(margin-top, 480px, 1460px, 20px, 60px);
+    }
+}
+
+.hero-paragraph {
+    @include size.calculate(font-size, 480px, 1460px, 16px, 20px);
+    color: var(--white);
+    text-align: center;
+}
+
+.small-accent {
+    @include size.calculate(font-size, 480px, 1460px, 16px, 20px);
+    font-weight: 600;
+    text-transform: uppercase;
+    color: var(--beige-accent);
+}
+
+.small-accent + * {
+    @include size.calculate(margin-top, 480px, 1460px, 16px, 30px);
+}

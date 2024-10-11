@@ -1,0 +1,29 @@
+@use '../mixins/fluid-size' as size;
+
+.slider {
+
+    .swiper-slide {
+        height: auto;
+
+        > [class*="card"] {
+            height: 100%;
+        }
+    }
+
+    &[data-slider-name="home-slider"] {
+        .swiper-slide {
+            @include size.calculate(max-width, 480px, 1460px, 280px, 360px);
+        }
+    }
+}
+
+.slider-arrows {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.slider + .slider-controls {
+    @include size.calculate(margin-top, 480px, 1460px, 24px, 40px);
+}

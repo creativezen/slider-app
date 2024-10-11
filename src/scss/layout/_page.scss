@@ -1,0 +1,13 @@
+@use "../mixins/fluid-size" as size;
+
+.page {
+  height: 100%;
+}
+
+.page__body {
+  margin: 0;
+  min-width: var(--min-width);
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}

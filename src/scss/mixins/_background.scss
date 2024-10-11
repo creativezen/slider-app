@@ -1,0 +1,52 @@
+/* stylelint-disable */
+@mixin desktop(
+    $desktop_img_1x,
+    $desktop_img_2x,
+) {
+    background-image: url("#{$desktop_img_1x}.jpg");
+    background-image: image-set(
+        "#{$desktop_img_1x}.jpg" 1x type("image/jpeg"),
+        "#{$desktop_img_2x}.jpg" 2x type("image/jpeg"),
+        "#{$desktop_img_1x}.webp" 1x type("image/webp"),
+        "#{$desktop_img_2x}.webp" 2x type("image/webp"),
+    );
+}
+
+@mixin mobile(
+    $desktop_img_1x,
+    $desktop_img_2x,
+    $tablet_img_1x,
+    $tablet_img_2x,
+    $phone_img_1x,
+    $phone_img_2x,
+) {
+    background-image: url("#{$desktop_img_1x}.jpg");
+    background-image: image-set(
+        "#{$desktop_img_1x}.jpg" 1x type("image/jpeg"),
+        "#{$desktop_img_2x}.jpg" 2x type("image/jpeg"),
+        "#{$desktop_img_1x}.webp" 1x type("image/webp"),
+        "#{$desktop_img_2x}.webp" 2x type("image/webp"),
+    );
+
+    /* версия фона для планшета */
+    @media only screen and (max-width: 980px) {
+        background-image: url("#{$tablet_img_1x}.jpg");
+        background-image: image-set(
+            "#{$tablet_img_1x}.jpg" 1x type("image/jpeg"),
+            "#{$tablet_img_2x}.jpg" 2x type("image/jpeg"),
+            "#{$tablet_img_1x}.webp" 1x type("image/webp"),
+            "#{$tablet_img_2x}.webp" 2x type("image/webp"),
+        );
+    }
+
+    /* версия фона для смартфонов */
+    @media only screen and (max-width: 480px) {
+        background-image: url("#{$phone_img_1x}.jpg");
+        background-image: image-set(
+            "#{$phone_img_1x}.jpg" 1x type("image/jpeg"),
+            "#{$phone_img_2x}.jpg" 2x type("image/jpeg"),
+            "#{$phone_img_1x}.webp" 1x type("image/webp"),
+            "#{$phone_img_2x}.webp" 2x type("image/webp"),
+        );
+    }
+}

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ru">
+@@include('blocks/head.html')
+
+<body>
+    @@include('blocks/header.html')
+
+    <main>
+        <section class="section stream">
+            <div class="container">
+                <div class="section__header">
+                    <h2 class="title">Слайдер</h2>
+                </div>
+                <div class="section__slider">
+                    <div class="section__slider-body">
+                        <div class="slider swiper js-slider" data-slider-name="home-slider">
+                            <div class="swiper-wrapper">
+                                <div class="swiper-slide">
+                                    слайд 01
+                                </div>
+                                <div class="swiper-slide">
+                                    слайд 02
+                                </div>
+                                <div class="swiper-slide">
+                                    слайд 03
+                                </div>
+                                <div class="swiper-slide">
+                                    слайд 04
+                                </div>
+                                <div class="swiper-slide">
+                                    слайд 05
+                                </div>
+                                <div class="swiper-slide">
+                                    слайд 06
+                                </div>
+                                <div class="swiper-slide">
+                                    слайд 07
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="section__slider-footer">
+                        <div class="slider-controls">
+                            <div class="slider-arrows">
+                                <div class="slider-btn prev-home-slider">
+                                    <button class="button-slider prev">
+                                        <svg width="26" height="28" viewBox="0 0 26 28" fill="none">
+                                            <path d="M1.52146 15.4462L10.2742 27.5L11.7367 25.4859L4.43026 15.4242H25.5V12.5758H4.43026L11.7367 2.51406L10.2742 0.5C10.2742 0.5 1.79956 12.1699 1.52146 12.5538C1.24335 12.9376 0.5 14 0.5 14C0.5 14 1.24335 15.0624 1.52146 15.4462Z" />
+                                        </svg>
+                                    </button>
+                                </div>
+                                <div class="slider-btn next-home-slider">
+                                    <button class="button-slider next">
+                                        <svg width="26" height="28" viewBox="0 0 26 28" fill="none">
+                                            <path d="M24.4785 15.4462L15.7258 27.5L14.2633 25.4859L21.5697 15.4242H0.5V12.5758H21.5697L14.2633 2.51406L15.7258 0.5C15.7258 0.5 24.2004 12.1699 24.4785 12.5538C24.7566 12.9376 25.5 14 25.5 14C25.5 14 24.7566 15.0624 24.4785 15.4462Z" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    @@include('blocks/footer.html')
+    <script src="js/slider.bundle.js"></script>
+</body>
+
+</html>

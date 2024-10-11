@@ -1,0 +1,16 @@
+/* stylelint-disable */
+@mixin font-face($font-family, $url, $weight, $style) {
+  @font-face {
+    font-family: "#{$font-family}";
+
+    /* версия подключения шрифтов для локальной разработки */
+    src: url('../fonts/#{$url}.woff2') format("woff2");
+
+    /* версия подключения шрифтов для темы WordPress */
+    /* src: url('/wp-content/themes/imcp/fonts/#{$url}.woff2') format("woff2"); */
+    
+    font-weight: #{$weight};
+    font-display: swap;
+    font-style: $style;
+  }
+}

@@ -1,0 +1,48 @@
+@use '../mixins/fluid-size' as size;
+
+.marquee {
+    --marquee-space: 20px;
+    overflow: hidden;
+    display: flex;
+
+    &__content {
+        display: flex;
+        align-items: center;
+        white-space: nowrap;
+        gap: var(--marquee-space);
+
+        .facts & {
+            gap: 20px;
+        }
+
+        * {
+            white-space: normal;
+        }
+    }
+
+    &__item {
+        height: 100%;
+        line-height: 1;
+        font-size: inherit;
+        color: inherit;
+        text-transform: inherit;
+
+        /* пространство между циклами родительского блока */
+        &:last-child {
+            margin-right: var(--marquee-space);
+        }
+
+        .facts & {
+            @include size.calculate(width, 480px, 1460px, 240px, 340px);
+        }
+
+        .card {
+            width: inherit;
+            height: 100%;
+        }
+    }
+
+    @media only screen and (max-width: 680px) {
+        --marquee-space: 12px;
+    }
+}

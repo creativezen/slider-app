@@ -1,0 +1,28 @@
+@use '../mixins/fluid-size' as size;
+@use '../mixins/disable-mob-hover' as mobile;
+
+/* for sticky footer */
+html,
+body {
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+}
+
+html {
+	scroll-behavior: smooth;
+}
+
+body {
+    padding-top: var(--header-height);
+    background-color: var(--page-bg);
+	font-family: var(--font-text);
+    @include size.calculate(font-size, 480px, 1460px, 14px, 16px);
+    font-weight: var(--font-weight);
+    line-height: var(--font-height);
+	color: var(--font-color);
+}
+
+a {
+    transition: var(--fast);
+}
