@@ -1,24 +1,24 @@
-# Реализация слайдера с использованием Swiper.js
+# Разные типы слайдеров на основе Swiper.js
 
-Этот проект использует Swiper.js для реализации настраиваемого слайдера на веб-странице. Эта настройка позволяет легко конфигурировать слайдеры, используя data-атрибуты в HTML и JavaScript код для инициализации и управления поведением слайдера.
+Этот проект использует библиотеку Swiper.js для реализации слайдеров и маркировочных прокруток (marquee) на веб-странице. С помощью данного кода вы можете легко добавлять слайдеры к себе на сайт и настраивать их параметры через HTML и JavaScript.
 
 ## Требования
 
-- **Swiper.js**: Убедитесь, что Swiper.js включен в ваш проект. Это руководство использует ES модули, поэтому его следует импортировать соответствующим образом.
+- **Swiper.js**: Убедитесь, что библиотека Swiper.js доступна и подключена в вашем проекте, чтобы избежать ошибок и обеспечить корректную работу.
 
 ## Структура HTML
 
-Ваш HTML должен включать следующую структуру для каждого слайдера, который вы хотите реализовать:
+Для каждого слайдера используйте следующую структуру:
+
+### Обычный слайдер
 
 ```html
 <div class="section__slider">
     <div class="section__slider-body">
-        <div class="slider swiper js-slider" data-slider-name="home-slider" data-slider-center="true" data-slider-loop="true">
+        <div class="slider swiper js-slider" data-slider-name="home-slider">
             <div class="swiper-wrapper">
-                <div class="swiper-slide">Слайд 01</div>
-                <div class="swiper-slide">Слайд 02</div>
-                <div class="swiper-slide">Слайд 03</div>
-                <!-- Добавляйте больше слайдов по мере необходимости -->
+                <!-- Ваши слайды здесь -->
+                <div class="swiper-slide">Слайд 1</div>
             </div>
         </div>
     </div>
@@ -26,14 +26,10 @@
         <div class="slider-controls">
             <div class="slider-arrows">
                 <div class="slider-btn prev-home-slider">
-                    <button class="button-slider prev">
-                        <!-- Иконка стрелки SVG -->
-                    </button>
+                    <button class="button-slider prev"> <!-- SVG для стрелки назад --> </button>
                 </div>
                 <div class="slider-btn next-home-slider">
-                    <button class="button-slider next">
-                        <!-- Иконка стрелки SVG -->
-                    </button>
+                    <button class="button-slider next"> <!-- SVG для стрелки вперед --> </button>
                 </div>
             </div>
         </div>
@@ -41,113 +37,143 @@
 </div>
 ```
 
-### Атрибуты
-- `data-slider-name`: Уникальный идентификатор для слайдера.
-- `data-slider-center`: Если атрибут присутствует и установлен в true, слайды центрируются.
-- `data-slider-loop`: Если атрибут присутствует и установлен в true, слайдер будет зациклен.
-- При необходимости добавьте `data-slider-items` для указания количества видимых элементов.
+### Marquee слайдер (С прокруткой)
 
-## Конфигурация JavaScript
-
-JavaScript код инициализирует и настраивает слайдеры на основе data-атрибутов в HTML.
-
-### Импорт Swiper
-
-```javascript
-import Swiper from 'swiper';
-import { FreeMode, Navigation, Pagination } from 'swiper/modules';
-
-Swiper.use([Pagination, Navigation, FreeMode]);
+```html
+<div class="section__slider">
+    <div class="section__slider-body">
+        <div class="slider swiper js-slider" data-marquee-name="home-marquee">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <div class="card-marquee"><img src="img/image1.jpg" alt="Описание изображения"></div>
+                </div>
+                <!-- Добавьте больше слайдов -->
+            </div>
+        </div>
+    </div>
+</div>
 ```
 
-### Инициализация слайдера
+### Использование data-атрибутов
 
-Создайте и настройте новый класс `sliderView`, который обрабатывает все слайдеры на странице:
+- **data-slider-name**: Уникальный идентификатор для обычного слайдера.
+- **data-marquee-name**: Уникальный идентификатор для слайдера marquee.
+- **Дополнительные параметры**: Вы можете использовать data-slider-center, data-slider-loop и data-slider-items для настройки слайдеров.
+
+### Инициализация и Настройка
+
+#### Создание класса и функций для управления слайдерами
 
 ```javascript
-export default class sliderView {
-    sliders = document.querySelectorAll('.js-slider');
-    name = '';
-    selector = '';
-    options = {
-        space_mobile: 10,
-        space_pc: 20,
-        items: "auto",
-        center: false,
-        loop: false
-    };
+import Swiper from 'swiper' // Импортируем библиотеку Swiper
+import { FreeMode, Navigation, Pagination, Autoplay } from 'swiper/modules' // Импортируем модули Swiper
 
-    init() {
-        if (this.sliders.length === 0) return false;
-        return true;
+// Активируем использование необходимых модулей Swiper
+Swiper.use([Pagination, Navigation, FreeMode, Autoplay])
+
+// Создаем класс sliderView для управления слайдерами
+export default class sliderView {
+    sliders = document.querySelectorAll('.js-slider') // Находим все элементы с классом 'js-slider'
+    selector = ''
+    slider = ''
+    marquee = ''
+    options = {
+        slider: {
+            space_mobile: 10, // Расстояние между слайдами на мобильных
+            space_pc: 20, // Расстояние между слайдами на ПК
+            items: "auto", // Видимое количество слайдов
+            center: false, // Центрирование слайдов
+            loop: false // Зацикливание слайдов
+        },
+        marquee: {
+            space: 10, // Пространство между элементами в marquee
+            speed: 6500, // Скорость прокрутки элементов в marquee
+            delay: 0, // Задержка перед автопрокруткой в marquee
+        }
     }
 
-    addSlider(slider) {
-        this.name = slider.dataset.sliderName;
-        this.selector = `[data-slider-name="${this.name}"]`;
-        
-        if (slider.dataset.sliderCenter) this.options.center = true;
-        if (slider.dataset.sliderLoop) this.options.loop = true;
-        if (slider.dataset.sliderItems) this.options.items = Number(slider.dataset.sliderItems);
+    // Метод инициализации с проверкой наличия слайдеров
+    init() {
+        if (this.sliders.length === 0) return false 
+        return true 
+    }
+
+    // Метод добавления и настройки каждого слайдера
+    addSlider(item) {
+        this.slider = item.dataset.sliderName
+        this.marquee = item.dataset.marqueeName
+
+        if (this.marquee != '') this.addMarquee()
+
+        if (this.slider == '') return
+
+        this.selector = `[data-slider-name="${this.slider}"]`
+        const element = document.querySelector(`${this.selector}`)
+        if (element?.dataset.sliderCenter) this.options.slider.center = true
+        if (element?.dataset.sliderLoop) this.options.slider.loop = true
+        if (element?.dataset.sliderItems) this.options.slider.items = Number(element.dataset.sliderItems)
 
         new Swiper(this.selector, {
-            slidesPerView: this.options.items,
-            centeredSlides: this.options.center,
-            loop: this.options.loop,
-            spaceBetween: this.options.space_mobile,
+            slidesPerView: this.options.slider.items,
+            centeredSlides: this.options.slider.center,
+            loop: this.options.slider.loop,
+            spaceBetween: this.options.slider.space_mobile,
 
             navigation: {
-                nextEl: `.slider-btn.next-${this.name}`,
-                prevEl: `.slider-btn.prev-${this.name}`
+                nextEl: `.slider-btn.next-${this.slider}`,
+                prevEl: `.slider-btn.prev-${this.slider}`
             },
 
             breakpoints: {
                 1080: {
-                    spaceBetween: this.options.space_pc,
+                    spaceBetween: this.options.slider.space_pc,
                 },
             }
-        });
+        })
+    }
+
+    // Метод для добавления и настройки marquee слайдера
+    addMarquee() {
+        console.log('hello from marquee')
+        this.selector = `[data-marquee-name="${this.marquee}"]`
+
+        new Swiper(this.selector, {
+            freeMode: true,
+            slidesPerView: 'auto',
+            loop: true,
+            spaceBetween: this.options.marquee.space,
+            speed: this.options.marquee.speed,
+            autoplay: {
+                delay: this.options.marquee.delay,
+            }
+        })
     }
 }
 ```
 
-### Запуск слайдера
+#### Инициализация слайдеров
 
-Чтобы запустить слайдер, используйте следующую функцию после загрузки страницы:
+Используйте следующий код для инициализации всех слайдеров на странице:
 
 ```javascript
-import sliderView from './sliderView';
+import sliderView from './sliderView' // Импортируем созданный класс sliderView
 
-export function standard() {
-    let view = new sliderView();
+// Функция `standart` для запуска слайдеров
+export function standart() {
+    let view = new sliderView()
 
     if (view.init() === false) {
-        console.log('.js-slider не найдены, проверьте правильность разметки...');
-        console.log('Либо отключите этот скрипт, если он не используется...');
-        return;
+        console.log('.js-slider не найдены, проверь правильность разметки...')
+        console.log('либо отключи данный скрипт, если он не используется...')
+        return
     }
 
-    view.sliders.forEach(slider => view.addSlider(slider));
+    view.sliders.forEach(slider => view.addSlider(slider))
 }
 ```
 
-## Пример использования
+## Как использовать
 
-Включите и выполните `standard()` на вашей странице для инициализации слайдеров:
-
-```javascript
-import { standard } from './path/to/your/code';
-
-document.addEventListener('DOMContentLoaded', function() {
-    standard();
-});
-```
-
-## Настройка
-
-Изменяйте data-атрибуты в HTML, чтобы изменить поведение слайдера:
-- Установите `data-slider-center` в true или false для включения/отключения центрирования слайдов.
-- Установите `data-slider-loop` для поведения зацикливания.
-- При необходимости укажите `data-slider-items` для количества слайдов на экране.
-
-Настройте опции JavaScript для изменения промежутков между слайдами или добавьте больше модулей Swiper по необходимости.
+1. Подключите Swiper.js и связанные модули в вашем проекте.
+2. Обеспечьте правильную HTML-разметку, включая необходимые data-атрибуты.
+3. Импортируйте и вызовите `standart()` функция, чтобы автоматически настроить все слайдеры на вашей странице.

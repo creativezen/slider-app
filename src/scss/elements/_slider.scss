@@ -15,6 +15,17 @@
             @include size.calculate(max-width, 480px, 1460px, 280px, 360px);
         }
     }
+
+    /* Специальная надстройка анимации для marquee */
+    &[data-marquee-name] {
+        .swiper-wrapper {
+            transition-timing-function: linear !important;
+        }
+
+        .swiper-slide {
+            max-width: 250px;
+        }
+    }
 }
 
 .slider-arrows {
