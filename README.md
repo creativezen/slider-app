@@ -54,6 +54,52 @@
 </div>
 ```
 
+---
+
+## Структура SCSS
+
+- **main.scss**
+
+```scss
+/* Vendors */
+@use './base/swiper';
+```
+
+- **_slider.scss**
+
+```scss
+.slider {
+    .swiper-slide {
+        height: auto;
+
+        > [class*="card"] {
+            height: 100%;
+        }
+    }
+    /* Специальная надстройка анимации для marquee */
+    &[data-marquee-name] {
+        .swiper-wrapper {
+            transition-timing-function: linear !important;
+        }
+
+        .swiper-slide {
+            max-width: 250px;
+        }
+    }
+}
+
+.slider-arrows {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.slider + .slider-controls {
+    margin-top: 40px;
+}
+```
+
 ### Использование data-атрибутов
 
 - **data-slider-name**: Уникальный идентификатор для обычного слайдера.
@@ -151,6 +197,8 @@ export default class sliderView {
 }
 ```
 
+---
+
 #### Инициализация слайдеров
 
 Используйте следующий код для инициализации всех слайдеров на странице:
@@ -172,8 +220,61 @@ export function standart() {
 }
 ```
 
+---
+
+### JS: slider.bundle.js
+
+- **Назначение:** Выполняется при загрузке страницы и инициирует создание слайдеров.
+- **Особенности:**
+  - Использует событие `DOMContentLoaded` для вызова функции `standart`.
+
+```javascript
+import * as slider from "./modules/slider/sliderControl";
+
+window.addEventListener('DOMContentLoaded', () => {
+    slider.standart();
+});
+```
+
+---
+
+### Webpack Configuration
+
+- **Файл:** `webpack.config.js`
+- **Назначение:** Определяет процесс сборки JavaScript для проекта.
+- **Основные настройки:**
+  - Режим: Production
+  - Точки входа: `main.js` и `slider.js`
+  - Используется `css-loader` и `style-loader` для обработки CSS файлов.
+
+```javascript
+const config = { 
+    mode: 'production', 
+    entry: { 
+        main: './src/js/main.js', 
+        slider: './src/js/slider.js', 
+    }, 
+    output: { 
+        filename: '[name].bundle.js', 
+    }, 
+    module: { 
+        rules: [ 
+            { 
+                test: /\.css$/, 
+                use: ['style-loader', 'css-loader'], 
+            }, 
+        ], 
+    }, 
+};
+
+module.exports = config;
+```
+
+---
+
 ## Как использовать
 
-1. Подключите Swiper.js и связанные модули в вашем проекте.
-2. Обеспечьте правильную HTML-разметку, включая необходимые data-атрибуты.
-3. Импортируйте и вызовите `standart()` функция, чтобы автоматически настроить все слайдеры на вашей странице.
+1. Установите Swiper.js и связанные с ним модули в ваш проект.
+2. Подключите к проекту стили Swiper.js.
+3. Обеспечьте правильную HTML-разметку, включая необходимые data-атрибуты.
+4. Импортируйте и вызовите `standart()` функция, чтобы автоматически настроить все слайдеры на вашей странице.
