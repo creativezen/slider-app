@@ -1,136 +1,166 @@
-# Готовые решения по использованию слайдеров Swiper разных типов
+# Инструкция по использованию слайдеров разных типов на основе плагина swiper.js
 
-Данный проект предназначен для интеграции нескольких типов слайдеров на сайт с использованием библиотеки Swiper.js.
-Данные решения включают три типа слайдеров: 
+Этот проект предоставляет простой способ добавления и управления слайдерами на вашем сайте с использованием библиотеки Swiper. Вы можете создавать три типа слайдеров: стандартный, вертикальный и бегущая строка (marquee).
 
- - стандартный горизонтальный - [data-slider-type="default"], 
- - вертикальный - [data-slider-type="vertical"],
- - бегущую строку - [data-slider-type="marquee"].
+## 1. Установка необходимых зависимостей
 
-## Предварительные требования
+```bash
+    npm install swiper
+```
 
-Перед началом работы убедитесь, что в ваш проект включены необходимые библиотеки:
-
-### Подключение стилей и скриптов
-
-1. **Подключение CSS Swiper**: добавьте Swiper CSS в ваш проект для корректной работы стилей.
-   ```html
-   <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
-   ```
-
-2. **Подключение JavaScript Swiper**: добавьте Swiper JS для функциональности слайдера.
-   ```html
-   <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-   ```
-
-## Структура проекта
-
-### HTML
-
-#### Стандартный слайдер
-
-Стандартный горизонтальный слайдер с навигационными стрелками.
+Либо убедитесь, что вы подключили все необходимые файлы в вашем HTML:
 
 ```html
-<div class="section__slider">
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+```
+
+## 2. Добавление слайдера в HTML
+
+### Стандартный слайдер
+
+Чтобы добавить стандартный слайдер, используйте следующую разметку:
+
+```html
     <div class="section__slider-body">
-        <!-- Основной контейнер слайдера -->
         <div class="slider swiper js-slider" data-slider-name="home-slider-default" data-slider-type="default">
             <div class="swiper-wrapper">
-                <!-- Слайды с контентом -->
-                <div class="swiper-slide">слайд 01</div>
-                <div class="swiper-slide">слайд 02</div>
-                <!-- Добавьте ещё слайды по необходимости -->
+                <div class="swiper-slide">
+                    слайд 01
+                </div>
+                <div class="swiper-slide">
+                    слайд 02
+                </div>
+                <!-- Добавьте больше слайдов по необходимости -->
             </div>
         </div>
     </div>
     <div class="section__slider-footer">
         <div class="slider-controls">
             <div class="slider-arrows">
-                <!-- Стрелки навигации -->
                 <div class="slider-btn prev-home-slider-default">
                     <button class="button-slider prev">
-                        <!-- SVG для кнопки назад -->
+                        <!-- Здесь может быть ваша иконка или текст -->
                     </button>
                 </div>
                 <div class="slider-btn next-home-slider-default">
                     <button class="button-slider next">
-                        <!-- SVG для кнопки вперед -->
+                        <!-- Здесь может быть ваша иконка или текст -->
                     </button>
                 </div>
             </div>
         </div>
     </div>
-</div>
 ```
 
-#### Вертикальный слайдер
+### Вертикальный слайдер
 
-Вертикально прокручиваемый слайдер, который поддерживает автоплей и зацикливание.
+Для вертикального слайдера используйте следующую разметку:
 
 ```html
 <div class="section__slider">
     <div class="section__slider-body">
-        <!-- Контейнер для вертикального слайдера -->
         <div class="slider swiper js-slider" data-slider-name="home-slider-vertical" data-slider-type="vertical" data-slider-loop="true" data-slider-auto="true">
             <div class="swiper-wrapper">
-                <div class="swiper-slide">слайд 01</div>
-                <!-- Добавьте ещё слайды -->
+                <div class="swiper-slide">
+                    слайд 01
+                </div>
+                <div class="swiper-slide">
+                    слайд 02
+                </div>
+                <!-- Добавьте больше слайдов по необходимости -->
             </div>
         </div>
     </div>
 </div>
 ```
 
-#### Бегущая строка
+### Бегущая строка (Marquee)
 
-Слайдер в виде бегущей строки, который подходит для демонстрации изображений в циклическом режиме.
+Для создания бегущей строки используйте следующую разметку:
 
 ```html
 <div class="section__slider">
     <div class="section__slider-body">
         <div class="slider swiper js-slider" data-slider-name="home-marquee" data-slider-type="marquee">
             <div class="swiper-wrapper">
-                <!-- Слайды с изображениями -->
                 <div class="swiper-slide">
                     <div class="card-marquee"><img src="img/img-card-history-01_2x.jpg" alt=""></div>
                 </div>
-                <!-- Добавьте ещё слайды с изображениями по необходимости -->
+                <div class="swiper-slide">
+                    <div class="card-marquee"><img src="img/img-card-history-02_2x.jpg" alt=""></div>
+                </div>
+                <!-- Добавьте больше слайдов по необходимости -->
             </div>
         </div>
     </div>
 </div>
 ```
 
-### JavaScript
+## 3. Настройка слайдера
 
-JavaScript код для управления слайдерами Swiper.
+### Обязательные атрибуты
 
-#### sliderView.js
+- `data-slider-name`: Уникальное имя слайдера. Используется для идентификации слайдера и связи с кнопками навигации.
+- `data-slider-type`: Тип слайдера. Возможные значения: `default`, `vertical`, `marquee`.
 
-Класс для управления настройками слайдеров.
+### Дополнительные атрибуты
+
+- `data-slider-loop`: Если установлено в `true`, слайдер будет зациклен.
+- `data-slider-auto`: Если установлено в `true`, слайдер будет автоматически прокручиваться.
+- `data-slider-center`: Если установлено, `true` слайды будут центрированы.
+- `data-slider-items`: Количество видимых слайдов, либо `auto`, если атрибут не указан.
+
+## 4. Запуск слайдеров
+
+Скрипт автоматически инициализирует все слайдеры при загрузке страницы. Если слайдеры не найдены, в консоль будет выведено сообщение об ошибке.
+
+## 5. Обработка ошибок
+
+Если в разметке допущена ошибка, например, не указано имя слайдера или тип, в консоль будет выведено соответствующее сообщение:
+
+- **Ошибка в названии атрибута имени**: Проверьте, что указан атрибут `data-slider-name` с уникальным значением.
+- **Отсутствует указание типа слайдера**: Проверьте, что указан атрибут `data-slider-type` с одним из допустимых значений (`default`, `vertical`, `marquee`).
+
+## 6. JavaScript
+
+### Файл: `sliderView.js`
+
+Этот файл содержит класс `sliderView`, который отвечает за визуальное управление слайдерами.
+
+#### Импорт библиотеки и модулей Swiper
 
 ```javascript
-import Swiper from 'swiper' // Импортируем библиотеку Swiper
-import { FreeMode, Navigation, Pagination, Autoplay } from 'swiper/modules' // Импортируем модули Swiper
+import Swiper from 'swiper';
+import { FreeMode, Navigation, Pagination, Autoplay } from 'swiper/modules';
+```
 
-// Используем необходимые модули Swiper
-Swiper.use([Pagination, Navigation, FreeMode, Autoplay])
+- **Swiper**: Основная библиотека для создания слайдеров.
+- **FreeMode, Navigation, Pagination, Autoplay**: Модули Swiper для различных функций.
 
-// Класс для управления слайдерами
+#### Активация модулей Swiper
+
+```javascript
+Swiper.use([Pagination, Navigation, FreeMode, Autoplay]);
+```
+
+- **Swiper.use**: Активирует необходимые модули для работы слайдеров.
+
+```javascript
 export default class sliderView {
-    sliders = document.querySelectorAll('.js-slider') // Находим все слайдеры с классом 'js-slider'
-    name = ''
-    selector = ''
-    slider = ''
-    type = ''
+    sliders = document.querySelectorAll('.js-slider');
+    name = '';
+    selector = '';
+    slider = '';
+    type = '';
+    marquee = '';
     options = {
         default: {
             direction: 'horizontal',
-            spaceBetween: 20, // Расстояние между слайдами
-            slidesPerView: "auto", // Видимое количество слайдов
-            centeredSlides: false, // Центрирование слайдов
-            loop: false, // Зацикливание
+            spaceBetween: 20,
+            slidesPerView: "auto",
+            centeredSlides: false,
+            loop: false,
             autoplay: false,
             speed: 1000,
         },
@@ -145,211 +175,217 @@ export default class sliderView {
         },
         marquee: {
             direction: 'horizontal',
-            slidesPerView: "auto", // Видимое количество слайдов
+            slidesPerView: "auto",
             spaceBetween: 10,
             speed: 5000,
             autoplay: {
-                delay: 0, // Немедленная прокрутка
+                delay: 0,
             }
         }
     }
+```
 
-    // Метод инициализации, проверяет наличие слайдеров на странице
-    init() {
-        if (this.sliders.length === 0) return false 
-        return true 
-    }
+- **sliders**: Находит все элементы с классом `js-slider`.
+- **options**: Объект с настройками для разных типов слайдеров.
 
-    // Обработка ошибки, если имя слайдера не указано
-    nameError(slider) {
-        console.log('------------------------------')
-        console.log('Ошибка в названии атрибута имени у:')
-        console.log(slider)
-        console.log('Проверь правильность основного атрибута [data-slider-name="_уникальное_название_"]')
-        console.log('------------------------------')
-    }
+#### Метод `init`
 
-    // Обработка ошибки, если тип слайдера не указан
-    typeError(selector) {
-        console.log('------------------------------')
-        console.log(selector)
-        console.log('Отсутствует указание типа слайдера [data-slider-type=" ???? "]')
-        console.log('Варианты типа: "default", "vertical", "marquee"')
-        console.log('------------------------------')
-    }
-
-    // Метод настройки стандартного слайдера
-    addDefault() {
-        const data = this.slider.dataset;
-        this.options.default.centeredSlides = data.sliderCenter !== undefined;
-        this.options.default.loop = data.sliderLoop !== undefined;
-        this.options.default.autoplay = data.sliderAuto !== undefined ? { delay: 1000 } : false;
-        this.options.default.slidesPerView = data.sliderItems !== undefined ? Number(data.sliderItems) : "auto";
-
-        new Swiper(this.selector, {
-            ...this.options.default,
-            navigation: {
-                nextEl: `.slider-btn.next-${this.name}`,
-                prevEl: `.slider-btn.prev-${this.name}`
-            },
-        });
-
-        this.resetOptions();
-    }
-
-    // Метод настройки вертикального слайдера
-    addVertical() {
-        const data = this.slider.dataset;
-        this.options.vertical.centeredSlides = data.sliderCenter !== undefined;
-        this.options.vertical.loop = data.sliderLoop !== undefined;
-        this.options.vertical.autoplay = data.sliderAuto !== undefined ? { delay: 1000 } : false;
-        this.options.vertical.slidesPerView = data.sliderItems !== undefined ? Number(data.sliderItems) : 1;
-
-        new Swiper(this.selector, this.options.vertical);
-
-        this.resetOptions();
-    }
-
-    // Метод настройки слайдера в стиле бегущей строки
-    addMarquee() {
-        new Swiper(this.selector, {
-            ...this.options.marquee,
-            freeMode: true,
-            loop: true
-        });
-
-        this.resetOptions();
-    }
-
-    // Сброс настроек к исходным
-    resetOptions() {
-        this.options = {
-            default: {
-                direction: 'horizontal',
-                spaceBetween: 20,
-                slidesPerView: "auto",
-                centeredSlides: false,
-                loop: false,
-                autoplay: false,
-                speed: 1000,
-            },
-            vertical: {
-                direction: 'vertical',
-                centeredSlides: false,
-                loop: false,
-                slidesPerView: 1,
-                spaceBetween: 20,
-                speed: 2000,
-                autoplay: false,
-            },
-            marquee: {
-                direction: 'horizontal',
-                slidesPerView: "auto",
-                spaceBetween: 10,
-                speed: 5000,
-                autoplay: {
-                    delay: 0,
-                }
-            }
-        }       
-    }
+```javascript
+init() {
+    if (this.sliders.length === 0) return false;
+    return true;
 }
 ```
 
-#### sliderControl.js
+- **init**: Проверяет наличие слайдеров. Если слайдеры не найдены, возвращает `false`.
 
-Скрипт для инициализации и запуска слайдеров.
+#### Методы обработки ошибок
 
 ```javascript
-import sliderView from './sliderView' // Импортируем sliderView
+nameError(slider) {
+    console.log('------------------------------');
+    console.log('Ошибка в названии атрибута имени у:');
+    console.log(slider);
+    console.log('Проверь правильность основного атрибута [data-slider-name="уникальное_название"]');
+    console.log('------------------------------');
+}
 
-// Функция для запуска слайдеров
+typeError(selector) {
+    console.log('------------------------------');
+    console.log(selector);
+    console.log('Отсутствует указание типа слайдера [data-slider-type=" ???? "]');
+    console.log('Варианты типа: "default", "vertical", "marquee"');
+    console.log('------------------------------');
+}
+```
+
+- **nameError**: Выводит сообщение об ошибке, если не указано имя слайдера.
+- **typeError**: Выводит сообщение об ошибке, если не указан тип слайдера.
+
+#### Методы добавления слайдеров
+
+```javascript
+addDefault() {
+    if (this.slider.dataset.sliderCenter !== undefined) this.options.default.centeredSlides = true;
+    if (this.slider.dataset.sliderLoop !== undefined) this.options.default.loop = true;
+    if (this.slider.dataset.sliderAuto !== undefined) this.options.default.autoplay = { delay: 1000 };
+    if (this.slider.dataset.sliderItems !== undefined) this.options.default.slidesPerView = Number(element.dataset.sliderItems);
+
+    new Swiper(this.selector, {
+        slidesPerView: this.options.default.slidesPerView,
+        centeredSlides: this.options.default.centeredSlides,
+        loop: this.options.default.loop,
+        spaceBetween: this.options.default.spaceBetween,
+        autoplay: this.options.default.autoplay,
+        speed: this.options.default.speed,
+
+        navigation: {
+            nextEl: `.slider-btn.next-${this.name}`,
+            prevEl: `.slider-btn.prev-${this.name}`
+        },
+    });
+
+    this.unsetOptions();
+}
+
+addVertical() {
+    if (this.slider.dataset.sliderCenter !== undefined) this.options.vertical.centeredSlides = true;
+    if (this.slider.dataset.sliderLoop !== undefined) this.options.vertical.loop = true;
+    if (this.slider.dataset.sliderAuto !== undefined) this.options.vertical.autoplay = { delay: 1000 };
+    if (this.slider.dataset.sliderItems !== undefined) this.options.vertical.slidesPerView = Number(element.dataset.sliderItems);
+
+    new Swiper(this.selector, {
+        direction: this.options.vertical.direction,
+        loop: this.options.vertical.loop,
+        centeredSlides: this.options.vertical.centeredSlides,
+        slidesPerView: this.options.vertical.slidesPerView,
+        spaceBetween: this.options.vertical.spaceBetween,
+        speed: this.options.vertical.speed,
+        autoplay: this.options.vertical.autoplay
+    });
+
+    this.unsetOptions();
+}
+
+addMarquee() {
+    new Swiper(this.selector, {
+        freeMode: true,
+        loop: true,
+        slidesPerView: this.options.marquee.slidesPerView,
+        direction: this.options.marquee.direction,
+        spaceBetween: this.options.marquee.spaceBetween,
+        speed: this.options.marquee.speed,
+        autoplay: this.options.marquee.autoplay
+    });
+
+    this.unsetOptions();
+}
+```
+
+- **addDefault**: Добавляет и настраивает стандартный слайдер.
+- **addVertical**: Добавляет и настраивает вертикальный слайдер.
+- **addMarquee**: Добавляет и настраивает бегущую строку.
+
+#### Метод `unsetOptions`
+
+```javascript
+unsetOptions() {
+    this.options = {
+        default: {
+            direction: 'horizontal',
+            spaceBetween: 20,
+            slidesPerView: "auto",
+            centeredSlides: false,
+            loop: false,
+            autoplay: false,
+            speed: 1000,
+        },
+        vertical: {
+            direction: 'vertical',
+            centeredSlides: false,
+            loop: false,
+            slidesPerView: 1,
+            spaceBetween: 20,
+            speed: 2000,
+            autoplay: false,
+        },
+        marquee: {
+            direction: 'horizontal',
+            slidesPerView: "auto",
+            spaceBetween: 10,
+            speed: 5000,
+            autoplay: {
+                delay: 0,
+            }
+        }
+    };
+}
+```
+
+- **unsetOptions**: Сбрасывает настройки слайдера к значениям по умолчанию после инициализации.
+
+### Файл: `sliderControl.js`
+
+Этот файл содержит функцию `standart`, которая инициализирует все слайдеры на странице.
+
+#### Импорт класса `sliderView`
+
+```javascript
+import sliderView from './sliderView';
+import sliderModel from './sliderModel';
+```
+
+- **sliderView**: Класс для управления слайдерами.
+- **sliderModel**: Модель данных для слайдеров (если используется).
+
+#### Функция `standart`
+
+```javascript
 export function standart() {
-    let view = new sliderView() // Создаем экземпляр sliderView
+    let model = new sliderModel();
+    let view = new sliderView();
 
-    // Проверяем наличие слайдеров
-    if (!view.init()) {
-        console.log('.js-slider не найдены, проверь правильность разметки...')
-        console.log('либо отключи данный скрипт, если он не используется...')
-        return
+    if (view.init() === false) {
+        console.log('.js-slider не найдены, проверь правильность разметки...');
+        console.log('либо отключи данный скрипт, если он не используется...');
+        return;
     }
 
-    // Инициализируем каждый найденный слайдер
     view.sliders.forEach(slider => {
         view.name = slider.dataset.sliderName;
         view.selector = `[data-slider-name="${view.name}"]`;
-        view.slider = document.querySelector(view.selector);
+        view.slider = document.querySelector(`${view.selector}`);
 
-        if (!view.name) view.nameError(slider);
-        if (!view.slider) return;
+        if (view.name == undefined) view.nameError(slider.dataset);
+        if (view.type == undefined) view.typeError(view.selector);
+        if (view.slider == '') return;
 
         view.type = view.slider.dataset.sliderType;
-        if (!view.type) view.typeError(view.selector);
 
-        // Настраиваем слайдер в зависимости от его типа
-        if(view.type === 'default') view.addDefault();
-        if(view.type === 'vertical') view.addVertical();
-        if(view.type === 'marquee') view.addMarquee();
+        if (view.type == 'default') view.addDefault();
+        if (view.type == 'vertical') view.addVertical();
+        if (view.type == 'marquee') view.addMarquee();
     });
 }
 ```
 
-### SCSS
+- **standart**: Инициализирует все слайдеры на странице.
+  - **view.init()**: Проверяет наличие слайдеров.
+  - **view.sliders.forEach**: Перебирает все найденные слайдеры.
+  - **view.name**: Получает имя слайдера из атрибута `data-slider-name`.
+  - **view.selector**: Создает селектор для поиска слайдера по имени.
+  - **view.slider**: Находит слайдер по селектору.
+  - **view.type**: Получает тип слайдера из атрибута `data-slider-type`.
+  - **view.addDefault, view.addVertical, view.addMarquee**: Добавляет и настраивает слайдер в зависимости от типа.
 
-Файл SCSS для стилизации слайдеров.
+### Файл: `slider.js`
 
-```scss
-@use '../mixins/fluid-size' as size;
+Этот файл запускает функцию `standart` при загрузке страницы.
 
-.slider {
-    .swiper-slide {
-        height: auto;
+```javascript
+import * as slider from "./modules/slider/sliderControl";
 
-        > [class*="card"] {
-            height: 100%;
-        }
-    }
-
-    // Специфическая настройка для стандартного слайдера
-    &[data-slider-name="home-slider-default"] {
-        .swiper-slide {
-            @include size.calculate(max-width, 480px, 1460px, 280px, 360px);
-        }
-    }
-
-    // Настройки для вертикального слайдера
-    &[data-slider-name="home-slider-vertical"] {
-        height: 100px;
-    }
-
-    // Специальная настройка для бегущей строки
-    &[data-slider-type="marquee"] {
-        .swiper-wrapper {
-            transition-timing-function: linear !important;
-        }
-
-        .swiper-slide {
-            max-width: 250px;
-        }
-    }
-}
-
-.slider-arrows {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-}
-
-// Размеры между слайдером и контролами
-.slider + .slider-controls {
-    @include size.calculate(margin-top, 480px, 1460px, 24px, 40px);
-}
+window.addEventListener('DOMContentLoaded', (e) => {
+    slider.standart();
+});
 ```
-
-## Инструкция по внедрению
-
-1. **Убедитесь, что все необходимые библиотеки Swiper подключены вашей разметке.**
-2. **Скопируйте и вставьте HTML-код необходимого слайдера в ваш проект.**
-3. **Подключите JavaScript файл `sliderControl.js` и вызовите функцию `standart()` после загрузки страницы.**
-4. **Измените настройки SCSS под свои нужды, если это необходимо.**
