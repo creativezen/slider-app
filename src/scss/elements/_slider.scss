@@ -10,14 +10,18 @@
         }
     }
 
-    &[data-slider-name="home-slider"] {
+    &[data-slider-name="home-slider-default"] {
         .swiper-slide {
             @include size.calculate(max-width, 480px, 1460px, 280px, 360px);
         }
     }
 
+    &[data-slider-name="home-slider-vertical"] {
+        height: 100px;
+    }
+
     /* Специальная надстройка анимации для marquee */
-    &[data-marquee-name] {
+    &[data-slider-type="marquee"] {
         .swiper-wrapper {
             transition-timing-function: linear !important;
         }

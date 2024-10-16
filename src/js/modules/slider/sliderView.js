@@ -1,95 +1,156 @@
-import Swiper from 'swiper' // Импортируем библиотеку Swiper для создания слайдеров
-import { FreeMode, Navigation, Pagination, Autoplay } from 'swiper/modules' // Импортируем модули, которые будем использовать
+import Swiper from 'swiper' // Импортируем библиотеку Swiper
+import { FreeMode, Navigation, Pagination, Autoplay } from 'swiper/modules' // Импортируем модули Swiper
 
-// Активируем использование модулей Swiper, которые нам нужны
+// Активируем использование необходимых модулей Swiper
 Swiper.use([Pagination, Navigation, FreeMode, Autoplay])
 
-// Создаем класс sliderView для управления слайдерами на странице
+// Создаем класс sliderView для управления слайдерами
 export default class sliderView {
-    // Находим все элементы с классом 'js-slider'
-    sliders = document.querySelectorAll('.js-slider')
-    selector = '' // Селектор для текущего слайдера
-    slider = '' // Переменная для хранения имени текущего слайдера
+    sliders = document.querySelectorAll('.js-slider') // Находим все элементы с классом 'js-slider'
+    name = ''
+    selector = ''
+    slider = ''
+    type = ''
     marquee = ''
-    options = { // Настройки по умолчанию для слайдера
-        slider: {
-            space_mobile: 10, // Расстояние между слайдами на мобильных устройствах
-            space_pc: 20, // Расстояние между слайдами на ПК
-            items: "auto", // Количество видимых слайдов
-            center: false, // Центрирование слайдов отключено по умолчанию
-            loop: false // Зацикливание слайдов отключено по умолчанию
+    options = {
+        default: {
+            direction: 'horizontal',
+            spaceBetween: 20, // Расстояние между слайдами на ПК
+            slidesPerView: "auto", // Видимое количество слайдов
+            centeredSlides: false, // Центрирование слайдов
+            loop: false, // Зацикливание слайдов
+            autoplay: false,
+            speed: 1000,
+        },
+        vertical: {
+            direction: 'vertical',
+            centeredSlides: false,
+            loop: false,
+            slidesPerView: 1,
+            spaceBetween: 20,
+            speed: 2000,
+            autoplay: false,
         },
         marquee: {
-            space: 10,
-            speed: 6500,
-            delay: 0,
+            direction: 'horizontal',
+            slidesPerView: "auto", // Видимое количество слайдов
+            spaceBetween: 10, // Пространство между элементами в marquee
+            speed: 5000, // Скорость прокрутки элементов в marquee
+            autoplay: {
+                delay: 0, // Задержка перед автопрокруткой в marquee
+            }
         }
     }
 
-    // Метод инициализации, проверяет наличие слайдеров на странице
+    // Метод инициализации с проверкой наличия слайдеров
     init() {
-        if (this.sliders.length === 0) return false // Если слайдеров нет, возвращаем false
-        return true // Если слайдеры найдены, возвращаем true
+        if (this.sliders.length === 0) return false 
+        return true 
     }
 
-    // Метод для добавления и настройки каждого слайдера
-    addSlider(item) {
-        // Получаем имя слайдера из data-атрибута
-        this.slider = item.dataset.sliderName
+    nameError(slider) {
+        console.log('------------------------------')
+        console.log('Ошибка в названии атрибута имени у:')
+        console.log(slider)
+        console.log('Проверь правильность основного атрибута [data-slider-name="_уникальное_название_"]')
+        console.log('------------------------------')
+    }
 
-        this.marquee = item.dataset.marqueeName
+    typeError(selector) {
+        console.log('------------------------------')
+        console.log(selector)
+        console.log('Отсутствует указание типа слайдера [data-slider-type=" ???? "]')
+        console.log('Варианты типа: "default", "vertical", "marquee"')
+        console.log('------------------------------')
+    }
 
-        if (this.marquee != '') this.addMarquee()
+    // Метод добавления и настройки стандартного слайдера
+    addDefault() {
+        if (this.slider.dataset.sliderCenter !== undefined) this.options.default.centeredSlides = true
+        if (this.slider.dataset.sliderLoop !== undefined) this.options.default.loop = true
+        if (this.slider.dataset.sliderAuto !== undefined) this.options.default.autoplay = { delay: 1000 }
+        if (this.slider.dataset.sliderItems !== undefined) this.options.default.slidesPerView = Number(element.dataset.sliderItems)
 
-        if (this.slider == '') return
-
-        // Формируем селектор для выборки слайдера по имени
-        this.selector = `[data-slider-name="${this.slider}"]`
-
-        // Проверяем, включено ли центрирование слайдов через data-атрибут и обновляем опции
-        if (document.querySelector(`${this.selector}`)?.dataset.sliderCenter) this.options.slider.center = true
-        // Проверяем, включено ли зацикливание слайдов через data-атрибут и обновляем опции
-        if (document.querySelector(`${this.selector}`)?.dataset.sliderLoop) this.options.slider.loop = true
-        // Проверяем количество видимых слайдов через data-атрибут и обновляем опции
-        if (document.querySelector(`${this.selector}`)?.dataset.sliderItems) this.options.slider.items = Number(document.querySelector(`${this.selector}`).dataset.sliderItems)
-
-        // Создаем новый слайдер с использованием Swiper с настройками
         new Swiper(this.selector, {
-            slidesPerView: this.options.slider.items, // Количество видимых слайдов
-            centeredSlides: this.options.slider.center, // Центрирование слайдов
-            loop: this.options.slider.loop, // Зацикливание слайдов
-            spaceBetween: this.options.slider.space_mobile, // Расстояние между слайдами на мобильных устройствах
+            slidesPerView: this.options.default.slidesPerView,
+            centeredSlides: this.options.default.centeredSlides,
+            loop: this.options.default.loop,
+            spaceBetween: this.options.default.spaceBetween,
+            autoplay: this.options.default.autoplay,
+            speed: this.options.default.speed,
 
-            // Настройки навигации слайдера
             navigation: {
-                nextEl: `.slider-btn.next-${this.slider}`, // Селектор кнопки для следующего слайда
-                prevEl: `.slider-btn.prev-${this.slider}` // Селектор кнопки для предыдущего слайда
+                nextEl: `.slider-btn.next-${this.name}`,
+                prevEl: `.slider-btn.prev-${this.name}`
             },
-
-            // Настройки для различных размеров экрана (брейкпоинты)
-            breakpoints: {
-                1080: {
-                    spaceBetween: this.options.slider.space_pc, // Расстояние между слайдами на ПК
-                },
-            }
         })
+
+        this.unsetOptions()
     }
 
+    addVertical() {
+        if (this.slider.dataset.sliderCenter !== undefined) this.options.vertical.centeredSlides = true
+        if (this.slider.dataset.sliderLoop !== undefined) this.options.vertical.loop = true
+        if (this.slider.dataset.sliderAuto !== undefined) this.options.vertical.autoplay = { delay: 1000 }
+        if (this.slider.dataset.sliderItems !== undefined) this.options.vertical.slidesPerView = Number(element.dataset.sliderItems)
+
+        new Swiper(this.selector, {
+            direction: this.options.vertical.direction,
+            loop: this.options.vertical.loop,
+            centeredSlides: this.options.vertical.centeredSlides,
+            slidesPerView: this.options.vertical.slidesPerView,
+            spaceBetween: this.options.vertical.spaceBetween,
+            speed: this.options.vertical.speed,
+            autoplay: this.options.vertical.autoplay
+        })
+
+        this.unsetOptions()
+    }
+
+    // Метод для добавления и настройки marquee слайдера
     addMarquee() {
-        console.log('hello from marquee')
-
-        // Формируем селектор для выборки слайдера по имени
-        this.selector = `[data-marquee-name="${this.marquee}"]`
-
         new Swiper(this.selector, {
             freeMode: true,
-            slidesPerView: 'auto',
             loop: true,
-            spaceBetween: this.options.marquee.space,
+            slidesPerView: this.options.marquee.slidesPerView,
+            direction: this.options.marquee.direction,
+            spaceBetween: this.options.marquee.spaceBetween,
             speed: this.options.marquee.speed,
-            autoplay: {
-                delay: this.options.marquee.delay,
-            }            
+            autoplay: this.options.marquee.autoplay
         })
+        
+        this.unsetOptions()
+    }
+
+    unsetOptions() {
+        this.options = {
+            default: {
+                direction: 'horizontal',
+                spaceBetween: 20, // Расстояние между слайдами на ПК
+                slidesPerView: "auto", // Видимое количество слайдов
+                centeredSlides: false, // Центрирование слайдов
+                loop: false, // Зацикливание слайдов
+                autoplay: false,
+                speed: 1000,
+            },
+            vertical: {
+                direction: 'vertical',
+                centeredSlides: false,
+                loop: false,
+                slidesPerView: 1,
+                spaceBetween: 20,
+                speed: 2000,
+                autoplay: false,
+            },
+            marquee: {
+                direction: 'horizontal',
+                slidesPerView: "auto", // Видимое количество слайдов
+                spaceBetween: 10, // Пространство между элементами в marquee
+                speed: 5000, // Скорость прокрутки элементов в marquee
+                autoplay: {
+                    delay: 0, // Задержка перед автопрокруткой в marquee
+                }
+            }
+        }       
     }
 }
